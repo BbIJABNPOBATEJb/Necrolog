@@ -1,0 +1,19 @@
+name: Necrolog
+version: '${project.version}'
+main: me.bbijabnpobatejb.necrolog.Necrolog
+api-version: '1.20'
+depend: []
+authors: [BbIJABNPOBATEJb]
+website: https://www.youtube.com/@BbIJIABNPOBATEJIb
+
+commands:
+  necrolog:
+    aliases:
+      - nl
+    usage: §cUsage - /<command>
+
+
+permissions:
+  necrolog.use:
+    description: Allows you to use the command /nl
+    default: true

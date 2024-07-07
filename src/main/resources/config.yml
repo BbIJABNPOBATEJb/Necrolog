@@ -1,0 +1,8 @@
+afterDeath:
+  ban: false
+  message: false
+  sound: false
+  spectator: false
+
+banMessage: §cYou are dead
+language: en
