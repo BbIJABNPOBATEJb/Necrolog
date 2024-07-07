@@ -1,4 +1,4 @@
-## [1.20+] 📜 Necrolog ☠️ Handy log of player deaths
+## [1.20+] Only Paper 📜 Necrolog ☠️ Handy log of player deaths
 
 ### _A simple plugin for logging player deaths._
 
