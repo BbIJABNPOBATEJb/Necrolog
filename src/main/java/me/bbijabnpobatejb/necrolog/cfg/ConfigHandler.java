@@ -115,6 +115,7 @@ public class ConfigHandler {
         list.add("  §7messageAfterDeath §a" + getPlugin().messageAfterDeath());
         list.add("  §7soundAfterDeath §a" + getPlugin().soundAfterDeath());
         list.add("  §7spectatorAfterDeath §a" + getPlugin().spectatorAfterDeath());
+        list.add("  §7logMessage §a" + getPlugin().logMessage().replace("§","&"));
 
         return list;
     }

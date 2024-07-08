@@ -29,6 +29,8 @@ public final class Necrolog extends PluginHelper {
     }
 
 
+
+
     @Override
     public void onDisable() {
         configHandler.saveAll();

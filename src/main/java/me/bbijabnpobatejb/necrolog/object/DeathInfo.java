@@ -1,6 +1,8 @@
 package me.bbijabnpobatejb.necrolog.object;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -13,6 +15,10 @@ import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static me.bbijabnpobatejb.necrolog.commands.NLExecutor.redColor2;
+import static me.bbijabnpobatejb.necrolog.events.PluginEventHandler.colorText;
+import static me.bbijabnpobatejb.necrolog.object.PluginHelper.getPlugin;
+
 public class DeathInfo implements ConfigurationSerializable {
 
     public String playerUUID;
@@ -23,7 +29,7 @@ public class DeathInfo implements ConfigurationSerializable {
     public DeathInfo() {
     }
 
-    public DeathInfo( String playerName,String playerUUID, long deathTime, DeathMessage deathMessage) {
+    public DeathInfo(String playerName, String playerUUID, long deathTime, DeathMessage deathMessage) {
         this.playerUUID = playerUUID;
         this.playerName = playerName;
         this.deathTime = deathTime;
@@ -62,6 +68,7 @@ public class DeathInfo implements ConfigurationSerializable {
                 DeathMessage.deserialize((Map<String, Object>) args.get("deathMessage"))
         );
     }
+
     public String getDate(long l) {
         Date date = new Date(l);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss z");
@@ -70,16 +77,34 @@ public class DeathInfo implements ConfigurationSerializable {
     }
 
     int color1 = 0xF59D77;
-    public Component getText(){
-        String date = getDate(deathTime);
-        Component message = Component.text(date + " - ").color(NamedTextColor.GRAY);
 
+    public Component getText(int indexInt) {
         HoverEvent<Component> hoverEvent = HoverEvent.showText(
                 Component.text("Nickname " + playerName + "\n").append(
-                Component.text("UUID " + playerUUID))
-        );
-        Component fullMessage = deathMessage.getFullMessage().hoverEvent(hoverEvent);
-        message = message.append(fullMessage.color(TextColor.color(color1)));
-        return message;
+                        Component.text("UUID " + playerUUID)));
+
+        String dateS = getDate(deathTime);
+        String logMessage = getPlugin().logMessage();
+        Component index = colorText("[" + indexInt + "]", redColor2);
+        Component date = Component.text(dateS).color(NamedTextColor.GRAY);
+        Component deathMessage = this.deathMessage.getFullMessage().hoverEvent(hoverEvent).color(TextColor.color(color1));
+
+        TextComponent message = Component.text(logMessage);
+
+        TextReplacementConfig build1 = TextReplacementConfig.builder()
+                .match("%index%")
+                .replacement(index)
+                .build();
+        TextReplacementConfig build2 = TextReplacementConfig.builder()
+                .match("%date%")
+                .replacement(date)
+                .build();
+        TextReplacementConfig build3 = TextReplacementConfig.builder()
+                .match("%deathMessage%")
+                .replacement(deathMessage)
+                .build();
+
+
+        return message.replaceText(build1).replaceText(build2).replaceText(build3);
     }
 }

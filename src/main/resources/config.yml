@@ -6,3 +6,4 @@ afterDeath:
 
 banMessage: §cYou are dead
 language: en
+logMessage: '%index% %date% §7- %deathMessage%'

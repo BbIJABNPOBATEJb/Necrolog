@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -14,9 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 public abstract class PluginHelper extends JavaPlugin {
@@ -28,8 +27,13 @@ public abstract class PluginHelper extends JavaPlugin {
     public final ConfigHandler configHandler = new ConfigHandler(this);
     protected final String afterDeathPath = "afterDeath.";
 
+
+    public String logMessage() {
+        return getConfig().getString("logMessage", "'%index% %date% §7- %deathMessage%'");
+    }
+
     public String banMessage() {
-        return getConfig().getString(afterDeathPath + "banMessage", "§cYou are dead");
+        return getConfig().getString("banMessage", "§cYou are dead");
     }
 
     public Language language() {
@@ -91,16 +95,18 @@ public abstract class PluginHelper extends JavaPlugin {
     }
 
     public void registerCommand(String commandName, org.bukkit.command.CommandExecutor executor) {
-        if (getCommand(commandName) != null) {
-            Objects.requireNonNull(getCommand(commandName)).setExecutor(executor);
+        PluginCommand command = getCommand(commandName);
+        if (command != null) {
+            command.setExecutor(executor);
         } else {
             getLogger().warning("Command '" + commandName + "' is not registered!");
         }
     }
 
     protected void registerTabCompleter(String commandName, TabCompleter completer) {
-        if (getCommand(commandName) != null) {
-            Objects.requireNonNull(getCommand(commandName)).setTabCompleter(completer);
+        PluginCommand command = getCommand(commandName);
+        if (command != null) {
+            command.setTabCompleter(completer);
         } else {
             getLogger().warning("Command completer '" + commandName + "' is not registered!");
         }
@@ -113,4 +119,6 @@ public abstract class PluginHelper extends JavaPlugin {
     public static void runTaskTimer(Consumer<BukkitTask> runnable, int tick) {
         plugin.getServer().getScheduler().runTaskTimer(plugin, runnable, 0, tick);
     }
+
+
 }

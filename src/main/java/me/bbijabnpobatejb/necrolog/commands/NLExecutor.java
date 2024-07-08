@@ -54,7 +54,7 @@ public class NLExecutor implements CommandExecutor {
                         }
 
                         sender.sendMessage(DO_YOU_WANT.getMessage() + LIST_DEATH_INFO.size() + ")");
-                        sender.sendMessage(THEN_USAGE.getMessage()+ " §4/nl " + sClear + " " + confirm);
+                        sender.sendMessage(THEN_USAGE.getMessage() + " §4/nl " + sClear + " " + confirm);
 
                         return true;
                     }
@@ -125,10 +125,7 @@ public class NLExecutor implements CommandExecutor {
             if (number >= size) break;
             DeathInfo deathInfo = LIST_DEATH_INFO.get(number);
             int textNumber = number + 1;
-            Component message = Component.text("[" + textNumber + "] ").color(TextColor.color(redColor2)).append(deathInfo.getText());
-
-            sender.sendMessage(message);
-
+            message(sender, deathInfo, textNumber);
         }
         sender.sendMessage(lineC);
         Component component = getComponent(page, totalSize, maxPages);
@@ -136,10 +133,17 @@ public class NLExecutor implements CommandExecutor {
         sender.sendMessage(lineC);
     }
 
+    public void message(CommandSender sender, DeathInfo deathInfo, int textNumber) {
+
+        Component message = deathInfo.getText(textNumber);
+        sender.sendMessage(message);
+
+    }
+
     @NotNull
     private Component getComponent(int page, int totalSize, int maxPages) {
         Component component = Component.text(DEATH_LIST.getMessage() + totalSize + "). ").color(TextColor.color(redColor));
-        component = component.append(Component.text(PAGE.getMessage() + " " + page + " из " + maxPages).color(TextColor.color(orangeColor)));
+        component = component.append(Component.text(PAGE.getMessage() + " " + page + " / " + maxPages).color(TextColor.color(orangeColor)));
 
         Component left = Component.text("[☜]").color(TextColor.color(yellowColor));
         Component right = Component.text("[☞]").color(TextColor.color(yellowColor));
