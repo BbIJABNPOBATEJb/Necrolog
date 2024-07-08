@@ -13,12 +13,16 @@
 ```
 afterDeath:
   ban: false
+  # Write a message to all players about the coordinates of the player's death
   message: false
+  # The sound of lightning
   sound: false
   spectator: false
 
 banMessage: §cYou are dead
 language: en
+# The message that comes out after the command "/nl"
+logMessage: '%index% %date% §7- %deathMessage%'
 ```
 
 
