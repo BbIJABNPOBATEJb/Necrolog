@@ -39,3 +39,5 @@ Permission operator
 - /nl reloadCfg - reload config
 - /nl clearAll confirm - completely clear all entries in Necrolog
 
+![image](https://github.com/user-attachments/assets/d2eaf7a7-221f-42ac-90e4-0f1ef3ca1e60)
+
